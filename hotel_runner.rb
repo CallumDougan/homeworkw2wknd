@@ -1,10 +1,25 @@
 require_relative ('hotel_class')
 require_relative('room_class')
 require_relative('guest_class')
-# binding.pry;''
-hotel = Hotel.new("Barry",4,4)
-puts hotel.single_rooms.to_s
-puts hotel.double_rooms.to_s
-hotel.report_capacity
+require 'pry-byebug'
+
+sing_1 = SingleRoom.new()
+sing_2 = SingleRoom.new()
+sing_3 = SingleRoom.new()
+sing_4 = SingleRoom.new()
+doub_1 = DoubleRoom.new()
+doub_2 = DoubleRoom.new()
+doub_3 = DoubleRoom.new()
+doub_4 = DoubleRoom.new()
+
+hotel = Hotel.new("Barry", sing_1, sing_2, sing_3, sing_4, doub_1, doub_2, doub_3, doub_4)
+# print hotel.rooms.to_s
 hotel.day_ticker
 hotel.day_ticker
+
+
+
+guest1 = Guest.new("Bill", 7, 'single')
+hotel.check_in(guest1)
+hotel.check_out(guest1)
+puts hotel

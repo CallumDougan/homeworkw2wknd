@@ -4,24 +4,54 @@ require_relative('accountant')
 
 class Hotel
 
-attr_reader :name, :single_rooms, :double_rooms, :day
+attr_accessor :name, :rooms, :day
 
-  def initialize (name, singlerooms, doublerooms)
+  def initialize (name, *rooms)
     @name = name
-    @single_rooms = Array.new(singlerooms)
-    @double_rooms = Array.new(doublerooms)
+    @rooms = Array.new(rooms)
     @day = 0
   end
 
   def report_capacity
-    total_rooms = [@single_rooms, @double_rooms].flatten
-    occupied_rooms = total_rooms.compact    
-    puts "Remaining capacity is #{total_rooms.length - occupied_rooms.length}/#{total_rooms.length}"
+    occupied_rooms = @rooms.compact    
+    puts "Remaining capacity is #{@rooms.length - occupied_rooms.length}/#{@rooms.length}"
   end
 
   def day_ticker
     @day = @day + 1
     puts "Day #{@day}:"
+  end
+
+  def check_in(guest)
+
+    if guest.room_type == 'single'
+      if assign_room == nil
+        puts "Sorry, there are no single rooms available."
+      else
+        @rooms[assign_room].add_occupier(guest)
+      end
+    if guest.room_type == 'double'
+      if assign_room == nil
+        puts "Sorry, there are no double rooms available."
+      else
+        @rooms[assign_room].add_occupier(guest)
+      end
+    end
+  end
+
+    def check_out (guest)
+      @rooms.each{ |room| 
+        if room.occupier != nil && room.occupier == guest
+          room.occupier = nil
+        end
+        }
+    end
+
+
+  end
+
+  def assign_room
+    @rooms.index(@rooms.find { |room| room.occupier == nil})
   end
 
 end
