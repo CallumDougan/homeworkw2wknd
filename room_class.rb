@@ -2,6 +2,7 @@ require_relative('hotel_class')
 
 class Room
 
+  
 
 end
 
