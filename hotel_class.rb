@@ -13,8 +13,7 @@ attr_accessor :name, :rooms, :day
   end
 
   def report_capacity
-    occupied_rooms = @rooms.compact    
-    puts "Remaining capacity is #{@rooms.length - occupied_rooms.length}/#{@rooms.length}"
+    puts "There are #{@rooms.length - self.occupied_rooms.length} rooms open"
   end
 
   def day_ticker
@@ -23,31 +22,36 @@ attr_accessor :name, :rooms, :day
   end
 
   def check_in(guest)
-
     if guest.room_type == 'single'
-      if assign_room == nil
+      if assign_room != nil
+        @rooms[assign_room].add_occupier(guest)
+        puts "Booking accepted for #{guest.name}."
+      else
         puts "Sorry, there are no single rooms available."
-      else
-        @rooms[assign_room].add_occupier(guest)
       end
-    if guest.room_type == 'double'
-      if assign_room == nil
-        puts "Sorry, there are no double rooms available."
-      else
-        @rooms[assign_room].add_occupier(guest)
+      if guest.room_type == 'double'
+        if assign_room != nil
+          @rooms[assign_room].add_occupier(guest)
+          "Booking accepted for #{guest.name}."
+        else
+          puts "Sorry, there are no double rooms available."
+         
+        end
       end
     end
   end
 
-    def check_out (guest)
-      @rooms.each{ |room| 
-        if room.occupier != nil && room.occupier == guest
-          room.occupier = nil
-        end
-        }
+  def occupied_rooms
+    @rooms.select {|room| room.occupier != nil}
+  end
+
+  def check_out (guest)
+    
+    for room in self.occupied_rooms
+      if room.occupier.name == guest.name
+        room.occupier = nil
+      end
     end
-
-
   end
 
   def assign_room
