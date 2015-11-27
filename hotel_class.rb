@@ -1,5 +1,6 @@
 require_relative('room_class')
 require_relative('guest_class')
+require_relative('accountant')
 
 class Hotel
 
@@ -15,7 +16,7 @@ attr_reader :name, :single_rooms, :double_rooms, :day
   def report_capacity
     total_rooms = [@single_rooms, @double_rooms].flatten
     occupied_rooms = total_rooms.compact    
-    puts total_rooms.length - occupied_rooms.length
+    puts "Remaining capacity is #{total_rooms.length - occupied_rooms.length}/#{total_rooms.length}"
   end
 
   def day_ticker
