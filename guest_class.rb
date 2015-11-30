@@ -1,5 +1,6 @@
 require_relative('room_class')
 require_relative('hotel_class')
+require_relative('accountant')
 
 class Guest
 
@@ -11,7 +12,4 @@ class Guest
     @room_type = room_type
   end
 
-  def name
-    @name
-  end
 end
